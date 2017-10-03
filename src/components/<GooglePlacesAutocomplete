@@ -1,0 +1,66 @@
+<GooglePlacesAutocomplete
+                placeholder='Enter your address'
+                minLength={2} // minimum length of text to search
+                autoFocus={true}
+                listViewDisplayed='auto'    // true/false/undefined
+                fetchDetails={true}
+                renderDescription={(row) => row.description} // custom description render
+                onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                  that.setState({
+                    xlat: details.geometry.location.lat,
+                    xlon: details.geometry.location.lng,
+                    addressSelected: true,
+                    address: details.formatted_address
+                  })
+                }}
+                getDefaultValue={() => {
+                  return ''; // text input default value
+                }}
+                query={{
+                  // available options: https://developers.google.com/places/web-service/autocomplete
+                  key: 'AIzaSyCKNdnorJLFaUIV3A5F1eBHHNXs6aRNWxg',
+                  language: 'en', // language of the results
+                  types: 'address', // default: 'geocode'
+                  region: 'us'
+                }}
+                styles={{
+                  description: {
+                    fontSize: 12
+                  },
+                  predefinedPlacesDescription: {
+                    color: '#1faadb',
+                  },
+                  textInputContainer: {
+                    backgroundColor: 'transparent',
+                    borderTopWidth: 0,
+                    borderBottomWidth:0,
+                    marginLeft: -5
+                  },
+                  textInput: {
+                    backgroundColor: '#FAFAFA'
+                  },
+                  poweredContainer: {
+                    backgroundColor: '#fafafa'
+                  },
+                  powered: {
+                    width: 80,
+                  }
+                }}
+                currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
+                currentLocationLabel="Current location"
+                nearbyPlacesAPI='GoogleReverseGeocoding' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+                GoogleReverseGeocodingQuery={{
+                  // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+                }}
+                GooglePlacesSearchQuery={{
+                  // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+                  rankby: 'distance',
+                  types: 'food',
+                }}
+                filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+              />
+
+              // <Text>
+      //  {this.state.pinLat}
+      //  {this.state.pinLong}
+      // </Text>
